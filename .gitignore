@@ -1,0 +1,10 @@
+.idea/*
+ShortMessageService/.idea/*
+ShortMessageServiceImpl/.idea/*
+ShortMessageServiceTestDriver/.idea/*
+ShortMessageService/bin/*
+ShortMessageServiceImpl/bin/*
+ShortMessageServiceTestDriver/bin/*
+ShortMessageServiceTestDriver/target/*
+*.iml
+
