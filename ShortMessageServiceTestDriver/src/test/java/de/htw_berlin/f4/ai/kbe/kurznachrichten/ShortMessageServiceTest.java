@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -21,6 +22,7 @@ public abstract class ShortMessageServiceTest {
 
 
 	@Before
+	@Ignore
 	public void prepareSms() {
 		Assert.assertTrue(
 				"There should be no user before generating the first one and the return of the empty user list should not be null.",
@@ -37,6 +39,7 @@ public abstract class ShortMessageServiceTest {
 	}
 
 	@Test
+	@Ignore
 	public void testRespondToMessage() {
 		String userName = "Donald Duck";
 		String message = "This is valid message";
@@ -45,6 +48,7 @@ public abstract class ShortMessageServiceTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
+	@Ignore
 	public void testRespondToMessageExceptionLongMessage() {
 		String userName = "Donald Duck";
 		String longMessage =
@@ -54,6 +58,7 @@ public abstract class ShortMessageServiceTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
+	@Ignore
 	public void testRespondToMessageExceptionShortMessage() {
 		String userName = "Donald Duck";
 		String shortMessage = "To short";
@@ -61,6 +66,7 @@ public abstract class ShortMessageServiceTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
+	@Ignore
 	public void testRespondToMessageExceptionNoUser() {
 		String userName = "Phantom Blot";
 		String message = "This is valid message";
@@ -69,6 +75,7 @@ public abstract class ShortMessageServiceTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
+	@Ignore
 	public void testRespondToMessageExceptionNoPredecessor() {
 		String userName = "Donald Duck";
 		String message = "This is valid message";
@@ -85,6 +92,7 @@ public abstract class ShortMessageServiceTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
+	@Ignore
 	public void testRespondToMessageExceptionMessageIsSuccessor() {
 		String userName = "Donald Duck";
 		String message = "This is valid message";
@@ -95,6 +103,7 @@ public abstract class ShortMessageServiceTest {
 	}
 
 	@Test(expected = NullPointerException.class)
+	@Ignore
 	public void testRespondToMessageExceptionNullUser() {
 		String message = "This is valid message";
 		Long predecessor = sms.createMessage("Donald Duck", "this is a valid message", "Testing Interfaces");
@@ -102,6 +111,7 @@ public abstract class ShortMessageServiceTest {
 	}
 
 	@Test(expected = NullPointerException.class)
+	@Ignore
 	public void testRespondToMessageExceptionNullMessage() {
 		String userName = "Donald Duck";
 		Long predecessor = sms.createMessage(userName, "this is a valid message", "Testing Interfaces");
@@ -109,6 +119,7 @@ public abstract class ShortMessageServiceTest {
 	}
 
 	@Test(expected = NullPointerException.class)
+	@Ignore
 	public void testRespondToMessageExceptionNullPredecessor() {
 		String userName = "Donald Duck";
 		String message = "This is valid message";
@@ -116,6 +127,7 @@ public abstract class ShortMessageServiceTest {
 	}
 
 	@Test
+	@Ignore
 	public void testCreateTopic() {
 		String userName = "Donald Duck";
 		String topic = "new Topic";
@@ -127,6 +139,7 @@ public abstract class ShortMessageServiceTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
+	@Ignore
 	public void testCreateTopicNoUser() {
 		String userName = "Phantom Blot";
 		String topic = "topic";
@@ -134,6 +147,7 @@ public abstract class ShortMessageServiceTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
+	@Ignore
 	public void testCreateTopicExistingTopic() {
 		String userName = "Donald Duck";
 		String topic = "Testing Interfaces";
@@ -141,6 +155,7 @@ public abstract class ShortMessageServiceTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
+	@Ignore
 	public void testCreateTopicShortTopic() {
 		String userName = "Donald Duck";
 		String shortTopic = "a";
@@ -148,6 +163,7 @@ public abstract class ShortMessageServiceTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
+	@Ignore
 	public void testCreateTopicLongTopic() {
 		String userName = "Donald Duck";
 		String longTopic =
@@ -157,6 +173,7 @@ public abstract class ShortMessageServiceTest {
 	}
 
 	@Test(expected = NullPointerException.class)
+	@Ignore
 	public void testCreateTopicNullUser() {
 		String topic = "Testing";
 		sms.createTopic(null, topic);
@@ -164,6 +181,7 @@ public abstract class ShortMessageServiceTest {
 	}
 
 	@Test(expected = NullPointerException.class)
+	@Ignore
 	public void testCreateTopicNullTopic() {
 		String userName = "Donald Duck";
 		sms.createTopic(userName, null);
@@ -171,6 +189,7 @@ public abstract class ShortMessageServiceTest {
 
 
 	@Test
+	@Ignore
 	public void testGetMessageByTopic() {
 		String topic = "Testing Interfaces";
 		sms.createMessage("Donald Duck", "This is a message which is valid", topic);
@@ -219,18 +238,21 @@ public abstract class ShortMessageServiceTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
+	@Ignore
 	public void testGetMessageByTopicNoTopic() {
 		String nonExistingTopic = "This topic does not exist";
 		sms.getMessageByTopic(nonExistingTopic, null);
 	}
 
 	@Test(expected = NullPointerException.class)
+	@Ignore
 	public void testGetMessageByTopicNullTopic() {
 		sms.getMessageByTopic(null, null);
 	}
 
 
 	@Test(expected = IllegalArgumentException.class)
+	@Ignore
 	public void testCreateMessageToLong() {
 		String userName = "Donald Duck";
 		String message =
@@ -242,6 +264,7 @@ public abstract class ShortMessageServiceTest {
 
 
 	@Test(expected = IllegalArgumentException.class)
+	@Ignore
 	public void testCreateMessageToShort() {
 		String userName = "Donald Duck";
 		String message = "To short";
@@ -250,6 +273,7 @@ public abstract class ShortMessageServiceTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
+	@Ignore
 	public void testUserNotExist() {
 		String userName = "Phantom Blot";
 		String message = "This is valid message";
@@ -258,6 +282,7 @@ public abstract class ShortMessageServiceTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
+	@Ignore
 	public void testTopicNotExist() {
 		String userName = "Donald Duck";
 		String message = "This is valid message";
@@ -266,6 +291,7 @@ public abstract class ShortMessageServiceTest {
 	}
 
 	@Test(expected = NullPointerException.class)
+	@Ignore
 	public void testUserNameNull() {
 		String message = "This is valid message";
 		String topic = "Testing Interfaces";
@@ -274,6 +300,7 @@ public abstract class ShortMessageServiceTest {
 	}
 
 	@Test(expected = NullPointerException.class)
+	@Ignore
 	public void testMessageNull() {
 		String userName = "Donald Duck";
 		String topic = "Testing Interfaces";
@@ -282,6 +309,7 @@ public abstract class ShortMessageServiceTest {
 	}
 
 	@Test(expected = NullPointerException.class)
+	@Ignore
 	public void testTopicNull() {
 		String userName = "Donald Duck";
 		String message = "This is valid message";
@@ -289,6 +317,7 @@ public abstract class ShortMessageServiceTest {
 	}
 
 	@Test
+	@Ignore
 	public void testDoesCreateMessageReturnNotNull() {
 		String userName = "Donald Duck";
 		String message = "This is valid message";
@@ -298,6 +327,7 @@ public abstract class ShortMessageServiceTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
+	@Ignore
 	public void testDeleteMessageNotExist() {
 		try {
 			sms.deleteMessage("Donald Duck", notExistingMessageId);
@@ -308,6 +338,7 @@ public abstract class ShortMessageServiceTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
+	@Ignore
 	public void testDeleteMessageIsNotOrigin() {
 		// A responding message is not a origin message
 		Long notOriginMessageID = sms.respondToMessage("Gustav Gans", "This a valid responding message", validPredecessor);
@@ -320,6 +351,7 @@ public abstract class ShortMessageServiceTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
+	@Ignore
 	public void testDeleteMessageUserNotExist() {
 		Long originMessageId = sms.createMessage("Donald Duck", "This is a valid origin message", "Testing Interfaces");
 		try {
@@ -331,6 +363,7 @@ public abstract class ShortMessageServiceTest {
 	}
 
 	@Test(expected = NullPointerException.class)
+	@Ignore
 	public void testDeleteMessageUserNameNull() {
 		Long originMessageId = sms.createMessage("Donald Duck", "This is a valid origin message", "Testing Interfaces");
 		try {
@@ -342,6 +375,7 @@ public abstract class ShortMessageServiceTest {
 	}
 
 	@Test(expected = NullPointerException.class)
+	@Ignore
 	public void testDeleteMessageIdNull() {
 		try {
 			sms.deleteMessage("Donald Duck", null);
@@ -352,6 +386,7 @@ public abstract class ShortMessageServiceTest {
 	}
 
 	@Test(expected = AuthorizationException.class)
+	@Ignore
 	public void testDeleteMessageUserNotCorrespondToCreatingUser() {
 		sms.createUser("Daniel Duesentrieb", "Entenhausen");
 		try {
@@ -363,6 +398,7 @@ public abstract class ShortMessageServiceTest {
 	}
 
 	@Test
+	@Ignore
 	public void testDeleteMessage() {
 		sms.createUser("Mickey Maus", "Entenhausen");
 		long originMessageId = sms.createMessage("Mickey Maus", "This message will be deleted", "Testing Interfaces");
@@ -385,33 +421,39 @@ public abstract class ShortMessageServiceTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
+	@Ignore
 	public void testCreateUserAlreadyExist() {
 		sms.createUser("Donald Duck", "Entenhausen");
 	}
 
 	@Test(expected = IllegalArgumentException.class)
+	@Ignore
 	public void testCreateUserNameToLong() {
 		String userName = "Donald Fauntleroy Dagobert Duck";
 		sms.createUser(userName, "Entenhausen");
 	}
 
 	@Test(expected = IllegalArgumentException.class)
+	@Ignore
 	public void testCreateUserNameToShort() {
 		String userName = "Tic";
 		sms.createUser(userName, "Entenhausen");
 	}
 
 	@Test(expected = NullPointerException.class)
+	@Ignore
 	public void testCreateUserNameIsNull() {
 		sms.createUser(null, "Entenhausen");
 	}
 
 	@Test(expected = NullPointerException.class)
+	@Ignore
 	public void testCreateUserCityIsNull() {
 		sms.createUser("Donald Duck", null);
 	}
 
 	@Test
+	@Ignore
 	public void testCreateUserValid() {
 		String userName = "Dagobert Duck";
 		String cityName = "Entenhausen";
@@ -427,11 +469,13 @@ public abstract class ShortMessageServiceTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
+	@Ignore
 	public void testDeleteUserNotExist() {
 		sms.deleteUser("Zacharias Zorngiebel");
 	}
 
 	@Test
+	@Ignore
 	public void testDeleteUserValid() {
 		String userName = "Dussel Duck";
 		sms.createUser(userName, "Entenhausen");
