@@ -12,7 +12,6 @@ import de.htw_berlin.aStudent.service.AnApplicationService;
 
 public class ShortMessageServiceImpl implements ShortMessageService{
 
-	
 	@Autowired
 	AnApplicationService anApplicationService;
 
@@ -74,11 +73,4 @@ public class ShortMessageServiceImpl implements ShortMessageService{
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	
-	
-
-
-	
-	
 }

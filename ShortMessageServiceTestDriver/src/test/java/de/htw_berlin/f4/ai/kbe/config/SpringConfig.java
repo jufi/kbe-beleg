@@ -16,6 +16,11 @@ public class SpringConfig {
 	ShortMessageService shortMessageService(){
 		return new ShortMessageServiceImpl();
 	}
+
+	@Bean
+	AppConfig appConfig() {
+		return new AppConfig();
+	}
 	
 }
  
