@@ -10,7 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -42,9 +41,8 @@ public class MessageModel extends Message implements Serializable {
 	@Column(nullable = false)
 	private String topic;
 
-	@OneToOne
 	@Column(nullable = false)
-	private User user;
+	private UserModel user;
 
 	@Column(nullable = false)
 	private Boolean origin;
@@ -52,7 +50,7 @@ public class MessageModel extends Message implements Serializable {
 	public MessageModel() {
 	}
 
-	public MessageModel(Date date, String content, String topic, User user, Boolean origin) {
+	public MessageModel(Date date, String content, String topic, UserModel user, Boolean origin) {
 		this.date = date;
 		this.content = content;
 		this.topic = topic;
@@ -96,7 +94,7 @@ public class MessageModel extends Message implements Serializable {
 		this.topic = topic;
 	}
 
-	public void setUser(User user) {
+	public void setUser(UserModel user) {
 		this.user = user;
 	}
 
