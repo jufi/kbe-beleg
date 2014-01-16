@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 /* externe properties file koennen verwendet werden.*/
 @PropertySource("classpath:META-INF/database.properties")
-@Configuration("hollywoodServiceJpaConfig")
+@Configuration("shortMessageServiceJpaConfig")
 public class ShortMessageServiceJpaConfig {
 
 	/* haelt zugang zu properties key-value paaren*/
@@ -53,7 +53,7 @@ public class ShortMessageServiceJpaConfig {
 		localContainerEntityManagerFactoryBean.setDataSource(dataSource());
 		localContainerEntityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter());
 		localContainerEntityManagerFactoryBean.
-				setPackagesToScan("htw.f4.ai.KBE.HollywoodService.Model");
+				setPackagesToScan("de.htw_berlin.aStudent.model");
 		return localContainerEntityManagerFactoryBean;
 	}
 
