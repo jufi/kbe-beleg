@@ -7,4 +7,7 @@ import de.htw_berlin.aStudent.model.UserModel;
  */
 public class UserRepositoryImpl extends AbstractRepository<UserModel> implements UserRepository {
 
+	public UserRepositoryImpl() {
+		setaClass(UserModel.class);
+	}
 }

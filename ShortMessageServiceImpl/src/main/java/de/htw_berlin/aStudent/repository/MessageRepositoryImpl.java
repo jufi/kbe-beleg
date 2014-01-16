@@ -7,4 +7,7 @@ import de.htw_berlin.aStudent.model.MessageModel;
  */
 public class MessageRepositoryImpl extends AbstractRepository<MessageModel> implements MessageRepository {
 
+	public MessageRepositoryImpl() {
+		setaClass(MessageModel.class);
+	}
 }
