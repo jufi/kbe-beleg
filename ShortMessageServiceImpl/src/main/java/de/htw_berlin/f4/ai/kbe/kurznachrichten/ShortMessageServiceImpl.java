@@ -30,7 +30,6 @@ public class ShortMessageServiceImpl implements ShortMessageService {
      * Default Bean constructor
      */
     public ShortMessageServiceImpl() {
-
     }
 
     @Override
@@ -140,7 +139,6 @@ public class ShortMessageServiceImpl implements ShortMessageService {
             topicModel.setName(topic);
             topicRepository.save(topicModel);
         }
-
     }
 
     @Transactional(readOnly = true)
@@ -186,10 +184,8 @@ public class ShortMessageServiceImpl implements ShortMessageService {
                        // TODO Adde Alle
                     }
                 }
-
             }
         }
-
         return null;
     }
 
@@ -245,7 +241,6 @@ public class ShortMessageServiceImpl implements ShortMessageService {
         }
         return isUserExisting;
     }
-
 
     // TODO should this method be part of the userRepository?
     @Transactional(readOnly = true)
