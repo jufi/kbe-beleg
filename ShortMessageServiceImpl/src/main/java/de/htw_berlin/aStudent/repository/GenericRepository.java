@@ -1,6 +1,7 @@
 package de.htw_berlin.aStudent.repository;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Kevin Goy
@@ -9,7 +10,7 @@ public interface GenericRepository<T> {
 
 	public T findById(Long id);
 
-	public List<T> findAll();
+	public Set<T> findAll();
 
 	public void save(T entity);
 

@@ -1,7 +1,9 @@
 package de.htw_berlin.aStudent.repository;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,9 +29,10 @@ public abstract class AbstractRepository<T extends Serializable> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<T> findAll() {
+	public Set<T> findAll() {
 		logger.debug("example log4j message: findAll called!");
-		return entityManager.createQuery("from " + aClass.getName()).getResultList();
+        List<T> list = entityManager.createQuery("from " + aClass.getName()).getResultList();
+        return new HashSet<T>(list);
 	}
 
 	public void save(T entity) {
