@@ -45,7 +45,7 @@ public class ShortMessageServiceImpl implements ShortMessageService {
             throw new IllegalArgumentException("The length of the message should be between 10 and 255 characters");
         }
         if (!isUserExisting(userName)) {
-            throw new IllegalArgumentException("User " + userName + "does not exist");
+            throw new IllegalArgumentException("User " + userName + " does not exist");
         }
         if (!isTopicExisting(topic)) {
             throw new IllegalArgumentException("The topic does not exist");
@@ -76,7 +76,7 @@ public class ShortMessageServiceImpl implements ShortMessageService {
             throw new IllegalArgumentException("The length of the message should be between 10 and 255 characters");
         }
         if (!isUserExisting(userName)) {
-            throw new IllegalArgumentException("User " + userName + "does not exist");
+            throw new IllegalArgumentException("User " + userName + " does not exist");
         }
         if (messageRepository.findById(predecessor) == null) {
             throw new IllegalArgumentException("The predecessor does not exist");
@@ -114,7 +114,7 @@ public class ShortMessageServiceImpl implements ShortMessageService {
             throw new IllegalArgumentException("Message is not origin");
         }
         if (!isUserExisting(userName)) {
-            throw new IllegalArgumentException("User " + userName + "does not exist");
+            throw new IllegalArgumentException("User " + userName + " does not exist");
         }
         if (userName == null || messageId == null) {
             throw new NullPointerException("The arguments should not be null");
@@ -130,10 +130,10 @@ public class ShortMessageServiceImpl implements ShortMessageService {
     @Override
     public void createTopic(String userName, String topic) {
         if (!isUserExisting(userName)) {
-            throw new IllegalArgumentException("User " + userName + "does not exist");
+            throw new IllegalArgumentException("User " + userName + " does not exist");
         }
         if (isTopicExisting(topic)) {
-            throw new IllegalArgumentException("Topic " + topic + "exists already!");
+            throw new IllegalArgumentException("Topic " + topic + " exists already!");
         }
         if (topic.length() < 2 || topic.length() > 70) {
             throw new IllegalArgumentException("The length of topic should be between 2 and 70 characters");
@@ -253,7 +253,7 @@ public class ShortMessageServiceImpl implements ShortMessageService {
         boolean isUserExisting = false;
         Set<UserModel> userModelSet = userRepository.findAll();
         for (UserModel userModel : userModelSet) {
-            isUserExisting = userModel.getName().equals(userName) ? true : isUserExisting;
+            isUserExisting = userModel.getName().equals(userName) || isUserExisting;
         }
         return isUserExisting;
     }

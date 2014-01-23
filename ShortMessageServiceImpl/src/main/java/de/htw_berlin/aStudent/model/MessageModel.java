@@ -8,10 +8,8 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Table;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -22,15 +20,14 @@ import de.htw_berlin.f4.ai.kbe.kurznachrichten.Message;
  * @author Kevin Goy
  */
 @Entity
-@Table(name = "Message")
 public class MessageModel extends Message implements Serializable, Comparable<MessageModel> {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue
 	private long id = 0;
 
 	@Temporal(TemporalType.DATE)
-	@Column(nullable = false)
+	@Column
 	private Date date;
 	@Transient
 	final private DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -38,13 +35,13 @@ public class MessageModel extends Message implements Serializable, Comparable<Me
 	@Column
 	private String content;
 
-	@Column(nullable = false)
+	@Column
 	private String topic;
 
-	@JoinColumn(name="user")
+	@OneToOne
 	private UserModel user;
 
-	@Column(nullable = false)
+	@Column
 	private Boolean origin;
 
 	@Column

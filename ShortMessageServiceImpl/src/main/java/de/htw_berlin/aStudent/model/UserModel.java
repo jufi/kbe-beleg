@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 import de.htw_berlin.f4.ai.kbe.kurznachrichten.User;
 
@@ -15,7 +14,6 @@ import de.htw_berlin.f4.ai.kbe.kurznachrichten.User;
  * @author Kevin Goy
  */
 @Entity
-@Table(name = "User")
 public class UserModel extends User implements Serializable {
 
 	@Id
