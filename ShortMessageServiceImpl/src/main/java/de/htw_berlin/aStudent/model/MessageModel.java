@@ -1,11 +1,8 @@
 package de.htw_berlin.aStudent.model;
 
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 import de.htw_berlin.f4.ai.kbe.kurznachrichten.Message;
 
@@ -27,11 +23,9 @@ public class MessageModel extends Message implements Serializable, Comparable<Me
 	@GeneratedValue
 	private long id = 0;
 
-	@Temporal(TemporalType.DATE)
 	@Column
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
-	@Transient
-	final private DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
 	@Column
 	private String content;
@@ -39,7 +33,7 @@ public class MessageModel extends Message implements Serializable, Comparable<Me
 	@Column
 	private String topic;
 
-	@OneToOne(cascade = CascadeType.PERSIST, orphanRemoval = true)
+	@OneToOne
 	private UserModel user;
 
 	@Column
@@ -59,7 +53,7 @@ public class MessageModel extends Message implements Serializable, Comparable<Me
 		this.origin = origin;
 	}
 
-	public long getId() {
+	public Long getMessageId() {
 		return id;
 	}
 
@@ -79,7 +73,7 @@ public class MessageModel extends Message implements Serializable, Comparable<Me
 		return user;
 	}
 
-	public Boolean getOrigin() {
+	public Boolean isOrigin() {
 		return origin;
 	}
 
@@ -116,7 +110,6 @@ public class MessageModel extends Message implements Serializable, Comparable<Me
 		return "MessageModel{" +
 				"id=" + id +
 				", date=" + date +
-				", dateFormat=" + dateFormat +
 				", content='" + content + '\'' +
 				", topic='" + topic + '\'' +
 				", user=" + user +
@@ -145,9 +138,6 @@ public class MessageModel extends Message implements Serializable, Comparable<Me
 		if (!date.equals(that.date)) {
 			return false;
 		}
-		if (!dateFormat.equals(that.dateFormat)) {
-			return false;
-		}
 		if (!origin.equals(that.origin)) {
 			return false;
 		}
@@ -166,7 +156,6 @@ public class MessageModel extends Message implements Serializable, Comparable<Me
 		int result = super.hashCode();
 		result = 31 * result + (int) (id ^ (id >>> 32));
 		result = 31 * result + date.hashCode();
-		result = 31 * result + dateFormat.hashCode();
 		result = 31 * result + content.hashCode();
 		result = 31 * result + topic.hashCode();
 		result = 31 * result + user.hashCode();
@@ -179,3 +168,4 @@ public class MessageModel extends Message implements Serializable, Comparable<Me
 		return this.getDate().compareTo(otherMessageModel.getDate());
 	}
 }
+

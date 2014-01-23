@@ -88,12 +88,10 @@ public class ShortMessageServiceImpl implements ShortMessageService {
 			throw new IllegalArgumentException("The predecessor is not origin");
 		}
 		else {
-			Calendar calender = Calendar.getInstance(Locale.GERMANY);
-			Date timestamp = calender.getTime();
 			String topic = messageRepository.findById(predecessor).getTopic();
 			MessageModel messageModel = new MessageModel();
 			messageModel.setContent(message);
-			messageModel.setDate(timestamp);
+			messageModel.setDate(new Date());
 			messageModel.setOrigin(false);
 			messageModel.setTopic(topic);
 			messageModel.setUser(userRepository.getUserByName(userName));
@@ -119,8 +117,7 @@ public class ShortMessageServiceImpl implements ShortMessageService {
 		else if (!isUserExisting(userName)) {
 			throw new IllegalArgumentException("User " + userName + " does not exist");
 		}
-
-		else if (messageRepository.findById(messageId).getUser().getName() != userName) {
+		else if (!messageRepository.findById(messageId).getUser().getName().equals(userName)) {
 			throw new AuthorizationException("The user " + userName + " is not the creator!");
 		}
 		else {
@@ -192,21 +189,26 @@ public class ShortMessageServiceImpl implements ShortMessageService {
 					List<Message> messageList = new ArrayList<Message>();
 					if (since != null && (originMessage.getDate().compareTo(since) > 0)) {
 						messageList.add(messageRepository.castModelToMessage(originMessage));
+						addResponds(messageModelList, originMessage, messageList);
+						messagesByTopicList.add(messageList);
 					}
 					else if (since == null) {
 						messageList.add(messageRepository.castModelToMessage(originMessage));
+						addResponds(messageModelList, originMessage, messageList);
+						messagesByTopicList.add(messageList);
 					}
-					for (MessageModel respondMessage : messageModelList) {
-						if (respondMessage.getPredecessorId() == originMessage.getId()) {
-							messageList.add(messageRepository.castModelToMessage(respondMessage));
-						}
-					}
-					messagesByTopicList.add(messageList);
 				}
-
 			}
 		}
 		return messagesByTopicList;
+	}
+
+	private void addResponds(List<MessageModel> messageModelList, MessageModel originMessage, List<Message> messageList) {
+		for (MessageModel respondMessage : messageModelList) {
+			if (respondMessage.getPredecessorId() == originMessage.getMessageId()) {
+				messageList.add(messageRepository.castModelToMessage(respondMessage));
+			}
+		}
 	}
 
 	@Transactional
@@ -241,6 +243,11 @@ public class ShortMessageServiceImpl implements ShortMessageService {
 				if (userModel.getName().equals(userName)) {
 					Long id = userModel.getId();
 					UserModel userModelDelete = userRepository.findById(id);
+					for (MessageModel messageModel : messageRepository.findAll()) {
+						if (messageModel.getUser().getName().equals(userName)) {
+							messageRepository.delete(messageModel);
+						}
+					}
 					userRepository.delete(userModelDelete);
 				}
 			}

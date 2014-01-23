@@ -24,7 +24,7 @@ public class MessageRepositoryImpl extends AbstractRepository<MessageModel> impl
 					messageModel.getDate().compareTo(message.getDate()) == 0 &&
 					messageModel.getTopic().equals(message.getTopic()) &&
 					messageModel.getUser().equals(message.getUser())) {
-				id = message.getId();
+				id = message.getMessageId();
 			}
 		}
 		return id;
@@ -36,10 +36,9 @@ public class MessageRepositoryImpl extends AbstractRepository<MessageModel> impl
 		message.setDate(messageModel.getDate());
 		message.setUser(messageModel.getUser());
 		message.setTopic(messageModel.getTopic());
-		message.setOrigin(messageModel.getOrigin());
+		message.setOrigin(messageModel.isOrigin());
 		message.setContent(messageModel.getContent());
 		message.setMessageId(messageModel.getMessageId());
 		return message;
 	}
-
 }
