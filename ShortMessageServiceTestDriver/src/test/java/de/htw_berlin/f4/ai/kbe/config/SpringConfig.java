@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Import;
 import de.htw_berlin.f4.ai.kbe.appconfig.AppConfig;
 import de.htw_berlin.f4.ai.kbe.kurznachrichten.ShortMessageService;
 import de.htw_berlin.f4.ai.kbe.kurznachrichten.ShortMessageServiceImpl;
+import org.springframework.orm.hibernate4.HibernateExceptionTranslator;
 
 @Configuration
 @Import(AppConfig.class) 
@@ -21,6 +22,11 @@ public class SpringConfig {
 	AppConfig appConfig() {
 		return new AppConfig();
 	}
+
+    @Bean
+    public HibernateExceptionTranslator hibernateExceptionTranslator(){
+        return new HibernateExceptionTranslator();
+    }
 	
 }
  

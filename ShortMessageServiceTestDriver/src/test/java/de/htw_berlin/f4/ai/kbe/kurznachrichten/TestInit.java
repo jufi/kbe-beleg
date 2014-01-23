@@ -1,6 +1,7 @@
 package de.htw_berlin.f4.ai.kbe.kurznachrichten;
 
-import org.junit.Before;
+
+
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,6 +18,11 @@ import de.htw_berlin.f4.ai.kbe.kurznachrichten.ShortMessageService;
    classes =  de.htw_berlin.f4.ai.kbe.config.SpringConfig.class)
 public class TestInit {
 
+	protected final static String userName = "mustermann";
+	protected final static String userName2 = "musterfrau";
+	protected final static String city = "Berlin";
+	protected final static String topic = "Entwurfsmuster";
+	
 	@Autowired
 	protected ShortMessageService shortMessageService; 
 

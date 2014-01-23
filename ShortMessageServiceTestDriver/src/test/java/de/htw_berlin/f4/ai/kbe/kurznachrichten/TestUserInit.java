@@ -1,10 +1,11 @@
 package de.htw_berlin.f4.ai.kbe.kurznachrichten;
 
+import java.util.Set;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-
 
 
 public class TestUserInit extends TestInit{
@@ -14,15 +15,17 @@ public class TestUserInit extends TestInit{
 	
 	@Before
 	public void setUp(){
-		//TODO
-		
+		shortMessageService.createUser(userName, city);
+		shortMessageService.createUser(userName2, city);
 	}
 	 
 	@After 
 	public void tearDown(){
-		//TODO
+		Set<User> users = shortMessageService.getUsers();
+		for(User u: users){
+			shortMessageService.deleteUser(u.getName());
+		}
 	}
-	
 	
 	@Ignore
 	@Test
