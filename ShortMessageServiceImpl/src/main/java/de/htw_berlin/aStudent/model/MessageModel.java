@@ -15,6 +15,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import de.htw_berlin.aStudent.repository.UserRepository;
 import de.htw_berlin.f4.ai.kbe.kurznachrichten.Message;
 import de.htw_berlin.f4.ai.kbe.kurznachrichten.User;
 
@@ -42,18 +43,18 @@ public class MessageModel extends Message implements Serializable, Comparable<Me
 	private String topic;
 
 	@Column(nullable = false)
-	private User user;
+	private UserModel user;
 
 	@Column(nullable = false)
 	private Boolean origin;
 
-    @Column(nullable = false)
-    private long predecessorId;
+  @Column(nullable = false)
+  private long predecessorId;
 
 	public MessageModel() {
 	}
 
-	public MessageModel(Date date, String content, String topic, User user, Boolean origin) {
+	public MessageModel(Date date, String content, String topic, UserModel user, Boolean origin) {
 		this.date = date;
 		this.content = content;
 		this.topic = topic;
@@ -77,7 +78,7 @@ public class MessageModel extends Message implements Serializable, Comparable<Me
 		return topic;
 	}
 
-	public User getUser() {
+	public UserModel getUser() {
 		return user;
 	}
 
@@ -101,7 +102,7 @@ public class MessageModel extends Message implements Serializable, Comparable<Me
 		this.topic = topic;
 	}
 
-	public void setUser(User user) {
+	public void setUser(UserModel user) {
 		this.user = user;
 	}
 
