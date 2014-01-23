@@ -1,12 +1,14 @@
 package de.htw_berlin.aStudent.repository;
 
-import de.htw_berlin.aStudent.model.MessageModel;
+import org.springframework.stereotype.Repository;
 
-import java.util.Set;
+import de.htw_berlin.aStudent.model.MessageModel;
+import de.htw_berlin.f4.ai.kbe.kurznachrichten.Message;
 
 /**
  * @author Kevin Goy
  */
+@Repository
 public class MessageRepositoryImpl extends AbstractRepository<MessageModel> implements MessageRepository {
 
     public MessageRepositoryImpl() {
@@ -27,4 +29,17 @@ public class MessageRepositoryImpl extends AbstractRepository<MessageModel> impl
         }
         return id;
     }
+
+	@Override
+	public Message castModelToMessage(MessageModel messageModel) {
+		Message message = new Message();
+		message.setDate(messageModel.getDate());
+		message.setUser(messageModel.getUser());
+		message.setTopic(messageModel.getTopic());
+		message.setOrigin(messageModel.getOrigin());
+		message.setContent(messageModel.getContent());
+		message.setMessageId(messageModel.getMessageId());
+		return message;
+	}
+
 }

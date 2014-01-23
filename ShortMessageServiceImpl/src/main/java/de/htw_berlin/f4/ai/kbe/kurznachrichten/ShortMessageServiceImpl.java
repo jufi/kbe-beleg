@@ -1,7 +1,18 @@
 package de.htw_berlin.f4.ai.kbe.kurznachrichten;
 
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.htw_berlin.aStudent.model.MessageModel;
 import de.htw_berlin.aStudent.model.TopicModel;
@@ -9,16 +20,10 @@ import de.htw_berlin.aStudent.model.UserModel;
 import de.htw_berlin.aStudent.repository.MessageRepository;
 import de.htw_berlin.aStudent.repository.TopicRepository;
 import de.htw_berlin.aStudent.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import de.htw_berlin.aStudent.service.AnApplicationService;
-import org.springframework.transaction.annotation.Transactional;
-
-
+@Service
 public class ShortMessageServiceImpl implements ShortMessageService {
 
-    @Autowired
-    AnApplicationService anApplicationService;
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -163,7 +168,7 @@ public class ShortMessageServiceImpl implements ShortMessageService {
     public Set<String> getTopics() {
         Set<TopicModel> topicModelSet = new HashSet<TopicModel>();
         topicModelSet = topicRepository.findAll();
-        return anApplicationService.castTopicModelToString(topicModelSet);
+        return topicRepository.castTopicModelToString(topicModelSet);
     }
 
     @Transactional
@@ -183,13 +188,13 @@ public class ShortMessageServiceImpl implements ShortMessageService {
                 if (originMessage.isOrigin() && originMessage.equals(topic)) {
                     List<Message> messageList = new ArrayList<Message>();
                     if (since != null && originMessage.getDate().compareTo(since) > 0)
-                        messageList.add(anApplicationService.castModelToMessage(originMessage));
+                        messageList.add(messageRepository.castModelToMessage(originMessage));
                     else if (since == null) {
-                        messageList.add(anApplicationService.castModelToMessage(originMessage));
+                        messageList.add(messageRepository.castModelToMessage(originMessage));
                     }
                     for (MessageModel respondMessage: messageModelList) {
                        if (respondMessage.getPredecessorId() == originMessage.getId()) {
-                           messageList.add(anApplicationService.castModelToMessage(respondMessage));
+                           messageList.add(messageRepository.castModelToMessage(respondMessage));
                         }
                     }
                     messagesByTopicList.add(messageList);
@@ -240,7 +245,7 @@ public class ShortMessageServiceImpl implements ShortMessageService {
     @Override
     public Set<User> getUsers() {
         Set<UserModel> userModelSet = userRepository.findAll();
-        return anApplicationService.castModelToUser(userModelSet);
+        return userRepository.castModelToUser(userModelSet);
     }
 
     @Transactional(readOnly = true)
