@@ -7,5 +7,5 @@ import de.htw_berlin.aStudent.model.MessageModel;
  */
 public interface MessageRepository extends GenericRepository<MessageModel> {
 
-
+    public Long getIDByMessageModel(MessageModel messageModel);
 }

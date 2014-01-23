@@ -32,8 +32,10 @@ public class ShortMessageServiceImpl implements ShortMessageService {
     public ShortMessageServiceImpl() {
     }
 
+    @Transactional
     @Override
     public Long createMessage(String userName, String message, String topic) {
+        Long id;
         if (message.length() < 10 || message.length() > 255) {
             throw new IllegalArgumentException("The length of the message should be between 10 and 255 characters");
         }
@@ -53,19 +55,18 @@ public class ShortMessageServiceImpl implements ShortMessageService {
             messageModel.setDate(timestamp);
             messageModel.setOrigin(true);
             messageModel.setTopic(topic);
-            messageModel.setUser(getUserByName(userName));
+            messageModel.setUser(userRepository.getUserByName(userName));
             messageRepository.save(messageModel);
-            // TODO How the fuck can i get the messageID ?
-
+            id = messageRepository.getIDByMessageModel(messageModel);
         }
-        // TODO this is transient
-        Long id = (long) 0;
         return id;
     }
 
+    @Transactional
     @Override
     public Long respondToMessage(String userName, String message,
                                  Long predecessor) {
+        Long id;
         if (message.length() < 10 || message.length() > 255) {
             throw new IllegalArgumentException("The length of the message should be between 10 and 255 characters");
         }
@@ -89,15 +90,15 @@ public class ShortMessageServiceImpl implements ShortMessageService {
             messageModel.setDate(timestamp);
             messageModel.setOrigin(false);
             messageModel.setTopic(topic);
-            messageModel.setUser(getUserByName(userName));
+            messageModel.setUser(userRepository.getUserByName(userName));
+            messageModel.setPredecessorId(predecessor);
             messageRepository.save(messageModel);
-            // TODO How the fuck can i get the messageID ?
+            id = messageRepository.getIDByMessageModel(messageModel);
         }
-        // TODO this is transient
-        Long id = (long) 0;
         return id;
     }
 
+    @Transactional
     @Override
     public void deleteMessage(String userName, Long messageId)
             throws AuthorizationException {
@@ -152,7 +153,7 @@ public class ShortMessageServiceImpl implements ShortMessageService {
         Set<TopicModel> topicModelSet = topicRepository.findAll();
         boolean isExisting = false;
         for (TopicModel topicModel : topicModelSet) {
-            isExisting = topicModel.getName() == topic ? true : isExisting;
+            isExisting = topicModel.getName().equals(topic) ? true : isExisting;
         }
         return isExisting;
     }
@@ -169,24 +170,34 @@ public class ShortMessageServiceImpl implements ShortMessageService {
     @Override
     public List<List<Message>> getMessageByTopic(
             String topic, Date since) {
+        List<List<Message>> messagesByTopicList = new ArrayList<List<Message>>();
         if (isTopicExisting(topic)) {
             throw new IllegalArgumentException("Topic " + topic + "exists already!");
         }
         if (topic == null) {
             throw new NullPointerException("Topic should not be null");
         } else {
-            List<List<Message>> messagesByTopicList = new ArrayList<List<Message>>();
-            for (MessageModel messageModel : messageRepository.findAll()) {
-                if (messageModel.getTopic() == topic) {
-                    if (messageModel.getDate().compareTo(since) > 0) {
-                        // TODO Adde nur die ab since date
-                    } else if (since == null) {
-                       // TODO Adde Alle
+            List<MessageModel> messageModelList = new ArrayList<MessageModel>(messageRepository.findAll());
+            Collections.sort(messageModelList);
+            for (MessageModel originMessage: messageModelList) {
+                if (originMessage.isOrigin() && originMessage.equals(topic)) {
+                    List<Message> messageList = new ArrayList<Message>();
+                    if (since != null && originMessage.getDate().compareTo(since) > 0)
+                        messageList.add(anApplicationService.castModelToMessage(originMessage));
+                    else if (since == null) {
+                        messageList.add(anApplicationService.castModelToMessage(originMessage));
                     }
+                    for (MessageModel respondMessage: messageModelList) {
+                       if (respondMessage.getPredecessorId() == originMessage.getId()) {
+                           messageList.add(anApplicationService.castModelToMessage(respondMessage));
+                        }
+                    }
+                    messagesByTopicList.add(messageList);
                 }
+
             }
         }
-        return null;
+        return messagesByTopicList;
     }
 
     @Transactional
@@ -216,7 +227,7 @@ public class ShortMessageServiceImpl implements ShortMessageService {
         } else {
             Set<UserModel> userModelSet = userRepository.findAll();
             for (UserModel userModel : userModelSet) {
-                if (userModel.getName() == userName) {
+                if (userModel.getName().equals(userName)) {
                     Long id = userModel.getId();
                     UserModel userModelDelete = userRepository.findById(id);
                     userRepository.delete(userModelDelete);
@@ -237,22 +248,10 @@ public class ShortMessageServiceImpl implements ShortMessageService {
         boolean isUserExisting = false;
         Set<UserModel> userModelSet = userRepository.findAll();
         for (UserModel userModel : userModelSet) {
-            isUserExisting = userModel.getName() == userName ? true : isUserExisting;
+            isUserExisting = userModel.getName().equals(userName) ? true : isUserExisting;
         }
         return isUserExisting;
     }
 
-    // TODO should this method be part of the userRepository?
-    @Transactional(readOnly = true)
-    private User getUserByName(String userName) {
-        User user = new User();
-        Set<UserModel> userModelSet = userRepository.findAll();
-        for (UserModel userModel : userModelSet) {
-            if (userModel.getName() == userName) {
-                user.setCity(userModel.getCity());
-                user.setName(userModel.getName());
-            }
-        }
-        return user;
-    }
+
 }

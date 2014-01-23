@@ -24,7 +24,7 @@ import de.htw_berlin.f4.ai.kbe.kurznachrichten.User;
  */
 @Entity
 @Table(name = "Message")
-public class MessageModel extends Message implements Serializable {
+public class MessageModel extends Message implements Serializable, Comparable<MessageModel> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -48,6 +48,9 @@ public class MessageModel extends Message implements Serializable {
 
 	@Column(nullable = false)
 	private Boolean origin;
+
+    @Column(nullable = false)
+    private long predecessorId;
 
 	public MessageModel() {
 	}
@@ -84,6 +87,10 @@ public class MessageModel extends Message implements Serializable {
 		return origin;
 	}
 
+    public long getPredecessorId() {
+        return predecessorId;
+    }
+
 	public void setDate(Date date) {
 		this.date = date;
 	}
@@ -103,6 +110,10 @@ public class MessageModel extends Message implements Serializable {
 	public void setOrigin(Boolean origin) {
 		this.origin = origin;
 	}
+
+    public void setPredecessorId(long predecessorId) {
+        this.predecessorId = predecessorId;
+    }
 
 	@Override
 	public String toString() {
@@ -166,4 +177,9 @@ public class MessageModel extends Message implements Serializable {
 		result = 31 * result + origin.hashCode();
 		return result;
 	}
+
+    @Override
+    public int compareTo(MessageModel otherMessageModel) {
+        return this.getDate().compareTo(otherMessageModel.getDate());
+    }
 }

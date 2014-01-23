@@ -1,7 +1,9 @@
 package de.htw_berlin.aStudent.service;
 
+import de.htw_berlin.aStudent.model.MessageModel;
 import de.htw_berlin.aStudent.model.TopicModel;
 import de.htw_berlin.aStudent.model.UserModel;
+import de.htw_berlin.f4.ai.kbe.kurznachrichten.Message;
 import de.htw_berlin.f4.ai.kbe.kurznachrichten.User;
 import org.springframework.stereotype.Service;
 
@@ -41,12 +43,24 @@ public class AnApplicationServiceImpl implements AnApplicationService {
 
     public Set<String> castTopicModelToString(Set<TopicModel> topicModelSet) {
         Set<String> topicStringSet = new HashSet<String>();
-        for (TopicModel topicModel : topicModelSet) {
+        for (TopicModel topicModel  : topicModelSet) {
             String topicString = topicModel.getName();
             topicStringSet.add(topicString);
         }
         return topicStringSet;
     }
-	
-	
+
+    @Override
+    public Message castModelToMessage(MessageModel messageModel) {
+        Message message = new Message();
+        message.setDate(messageModel.getDate());
+        message.setUser(messageModel.getUser());
+        message.setTopic(messageModel.getTopic());
+        message.setOrigin(messageModel.getOrigin());
+        message.setContent(messageModel.getContent());
+        message.setMessageId(messageModel.getMessageId());
+        return message;
+    }
+
+
 }

@@ -14,6 +14,9 @@ import javax.persistence.Id;
 @Entity
 public class TopicModel implements Serializable {
 
+    public TopicModel() {
+    }
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id = 0;
@@ -21,8 +24,13 @@ public class TopicModel implements Serializable {
 	@Column(nullable = false, length = 30)
 	private String name;
 
-	public TopicModel() {
-	}
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
 	public TopicModel(String name) {
 		this.name = name;
