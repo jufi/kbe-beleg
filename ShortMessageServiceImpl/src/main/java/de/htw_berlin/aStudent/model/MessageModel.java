@@ -50,7 +50,7 @@ public class MessageModel extends Message implements Serializable {
 	public MessageModel() {
 	}
 
-	public MessageModel(Date date, String content, String topic, UserModel user, Boolean origin) {
+	public MessageModel(Date date, String content, String topic, User user, Boolean origin) {
 		this.date = date;
 		this.content = content;
 		this.topic = topic;
