@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -38,7 +39,7 @@ public class MessageModel extends Message implements Serializable, Comparable<Me
 	@Column
 	private String topic;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.PERSIST, orphanRemoval = true)
 	private UserModel user;
 
 	@Column

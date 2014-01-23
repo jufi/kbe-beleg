@@ -9,7 +9,7 @@ import de.htw_berlin.f4.ai.kbe.kurznachrichten.User;
  * @author Kevin Goy
  */
 public interface UserRepository extends GenericRepository<UserModel> {
-	public User getUserByName(String userName);
+	public UserModel getUserByName(String userName);
 
 	public Set<User> castModelToUser(Set<UserModel> userModelSet);
 

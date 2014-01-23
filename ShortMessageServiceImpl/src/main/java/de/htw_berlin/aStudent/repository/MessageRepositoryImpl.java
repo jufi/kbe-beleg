@@ -11,24 +11,24 @@ import de.htw_berlin.f4.ai.kbe.kurznachrichten.Message;
 @Repository
 public class MessageRepositoryImpl extends AbstractRepository<MessageModel> implements MessageRepository {
 
-    public MessageRepositoryImpl() {
-        setaClass(MessageModel.class);
-    }
+	public MessageRepositoryImpl() {
+		setaClass(MessageModel.class);
+	}
 
-    @Override
-    public Long getIDByMessageModel(MessageModel messageModel) {
-        Long id = (long) 0;
-        for (MessageModel message : findAll()) {
-            if (messageModel.isOrigin() == message.isOrigin() &&
-                    messageModel.getContent().equals(message.getContent()) &&
-                    messageModel.getDate().compareTo(message.getDate()) == 0 &&
-                    messageModel.getTopic().equals(message.getTopic()) &&
-                    messageModel.getUser().equals(message.getUser())) {
-                id = message.getId();
-            }
-        }
-        return id;
-    }
+	@Override
+	public Long getIDByMessageModel(MessageModel messageModel) {
+		Long id = null;
+		for (MessageModel message : findAll()) {
+			if (messageModel.isOrigin() == message.isOrigin() &&
+					messageModel.getContent().equals(message.getContent()) &&
+					messageModel.getDate().compareTo(message.getDate()) == 0 &&
+					messageModel.getTopic().equals(message.getTopic()) &&
+					messageModel.getUser().equals(message.getUser())) {
+				id = message.getId();
+			}
+		}
+		return id;
+	}
 
 	@Override
 	public Message castModelToMessage(MessageModel messageModel) {

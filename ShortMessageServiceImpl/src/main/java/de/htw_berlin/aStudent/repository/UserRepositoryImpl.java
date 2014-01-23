@@ -19,19 +19,17 @@ public class UserRepositoryImpl extends AbstractRepository<UserModel> implements
 		setaClass(UserModel.class);
 	}
 
-    // TODO should this method be part of the userRepository?
-    @Transactional(readOnly = true)
-    public User getUserByName(String userName) {
-        User user = new User();
-        Set<UserModel> userModelSet = findAll();
-        for (UserModel userModel : userModelSet) {
-            if (userModel.getName().equals(userName)) {
-                user.setCity(userModel.getCity());
-                user.setName(userModel.getName());
-            }
-        }
-        return user;
-    }
+	@Transactional(readOnly = true)
+	public UserModel getUserByName(String userName) {
+		UserModel user = new UserModel();
+		Set<UserModel> userModelSet = findAll();
+		for (UserModel userModel : userModelSet) {
+			if (userModel.getName().equals(userName)) {
+				user = userModel;
+			}
+		}
+		return user;
+	}
 
 	public Set<User> castModelToUser(Set<UserModel> userModelSet) {
 		Set<User> userSet = new HashSet<User>();
