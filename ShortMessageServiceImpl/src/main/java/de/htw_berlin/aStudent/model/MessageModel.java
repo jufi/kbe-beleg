@@ -42,7 +42,7 @@ public class MessageModel extends Message implements Serializable {
 	private String topic;
 
 	@Column(nullable = false)
-	private UserModel user;
+	private User user;
 
 	@Column(nullable = false)
 	private Boolean origin;
@@ -94,7 +94,7 @@ public class MessageModel extends Message implements Serializable {
 		this.topic = topic;
 	}
 
-	public void setUser(UserModel user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 
