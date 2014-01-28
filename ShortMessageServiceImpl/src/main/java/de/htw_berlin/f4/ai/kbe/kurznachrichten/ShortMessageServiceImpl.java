@@ -37,6 +37,11 @@ public class ShortMessageServiceImpl implements ShortMessageService {
 	public ShortMessageServiceImpl() {
 	}
 
+	public ShortMessageServiceImpl(MessageRepository messageRepository, TopicRepository topicRepository) {
+		this.messageRepository = messageRepository;
+		this.topicRepository = topicRepository;
+	}
+
 	@Transactional
 	@Override
 	public Long createMessage(String userName, String message, String topic) {
@@ -81,7 +86,7 @@ public class ShortMessageServiceImpl implements ShortMessageService {
 		else if (!isUserExisting(userName)) {
 			throw new IllegalArgumentException("User " + userName + " does not exist");
 		}
-		else if (messageRepository.findById(predecessor) == null) {
+		else if (messageRepository. findById(predecessor) == null) {
 			throw new IllegalArgumentException("The predecessor does not exist");
 		}
 		else if (!messageRepository.findById(predecessor).isOrigin()) {
@@ -205,7 +210,7 @@ public class ShortMessageServiceImpl implements ShortMessageService {
 
 	private void addResponds(List<MessageModel> messageModelList, MessageModel originMessage, List<Message> messageList) {
 		for (MessageModel respondMessage : messageModelList) {
-			if (respondMessage.getPredecessorId() == originMessage.getMessageId()) {
+			if ((respondMessage.getPredecessorId() == originMessage.getMessageId()) && ! respondMessage.isOrigin()) {
 				messageList.add(messageRepository.castModelToMessage(respondMessage));
 			}
 		}
